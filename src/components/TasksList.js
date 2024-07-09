@@ -1,6 +1,8 @@
 // src/components/TasksList.js
 import React, { useState } from 'react';
 import AddTaskModal from './AddTaskModal';
+import AddTaskIcon from '../icons/AddTaskIcon';
+import DeleteTaskIcon from '../icons/DeleteTaskIcon';
 
 const TasksList = ({ title, tasks, onAddTask, onUpdateTask, onDeleteTask, defaultDate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,11 +12,11 @@ const TasksList = ({ title, tasks, onAddTask, onUpdateTask, onDeleteTask, defaul
   };
 
   return (
-    <div className="px-4">
-      <h2 className="text-[#0e141b] text-2xl font-bold pt-5 pb-3 flex justify-between items-center">
+    <div>
+      <h3 className="text-[#0e141b] text-xl font-bold pt-5 pb-3 pr-2 flex justify-between items-center">
         {title}
-        <button onClick={() => setIsModalOpen(true)} className="bg-blue-500 text-white px-4 py-2 rounded">Add Task</button>
-      </h2>
+        <button onClick={() => setIsModalOpen(true)} className="bg-transparent text-slate-900"><AddTaskIcon/></button>
+      </h3>
       <div className="flex flex-col gap-2">
         {tasks.map((task) => (
           <div key={task._id} className={`flex items-center gap-4 p-2 rounded-lg shadow-md ${task.completed ? 'bg-gray-200' : 'bg-[#f8fafb]'}`}>
@@ -27,7 +29,7 @@ const TasksList = ({ title, tasks, onAddTask, onUpdateTask, onDeleteTask, defaul
             <div className="flex-1">
               <p className={`text-base truncate ${task.completed ? 'text-gray-500 line-through' : 'text-[#0e141b]'}`}>{task.title}</p>
             </div>
-            <button onClick={() => onDeleteTask(task._id)} className="text-red-500">Delete</button>
+            <button onClick={() => onDeleteTask(task._id)} className="text-red-500"><DeleteTaskIcon/></button>
           </div>
         ))}
       </div>

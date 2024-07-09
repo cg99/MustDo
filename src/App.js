@@ -3,7 +3,8 @@ import DailyEngagement from './components/DailyEngagement';
 import TodaysTasks from './components/TodaysTasks';
 import Upcoming from './components/Upcoming';
 import NotToDo from './components/NotToDo';
-import Notes from './components/Notes';
+import MenuIcon from './icons/MenuIcon';
+
 import './index.css';
 import { getTasks, createTask, updateTask, deleteTask } from './api';
 
@@ -53,7 +54,6 @@ function App() {
   const dailyEngagementTasks = tasks.filter(task => task.taskType === 'dailyEngagement');
   const regularTasks = tasks.filter(task => task.taskType === 'regular');
   const notToDoTasks = tasks.filter(task => task.taskType === 'notToDo');
-  const noteTasks = tasks.filter(task => task.taskType === 'note');
 
   const formatDate = (date) => {
     const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
@@ -63,52 +63,50 @@ function App() {
   const currentDate = formatDate(new Date());
 
   return (
-    <div className="bg-[#f8fafb] font-sans min-h-screen flex flex-col justify-between">
+    <div className="bg-[#f8fafb] font-sans min-h-screen flex flex-col justify-between px-5">
       <header className="flex items-center justify-between bg-[#f8fafb] p-4 pb-2">
         <h2 className="text-[#0e141b] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">MustDo</h2>
         <button className="flex items-center justify-center h-12 w-12 bg-transparent text-[#0e141b]">
-          <span className="material-icons">Settings</span>
+          <MenuIcon />
         </button>
       </header>
-      <div className="px-4">
+      <div className="px-4 pb-2">
         <h1 className="text-[#0e141b] text-2xl font-bold pt-5">{quote}</h1>
         <p className="text-[#0e141b] text-base pt-1">It's {currentDate}</p>
       </div>
-      <DailyEngagement
-        tasks={dailyEngagementTasks}
-        onAddTask={(task) => handleAddTask({ ...task, taskType: 'dailyEngagement' })}
-        onToggleTask={(id) => handleUpdateTask(id, { completed: !tasks.find(task => task._id === id).completed })}
-        onDeleteTask={handleDeleteTask}
-      />
-      <TodaysTasks
-        tasks={regularTasks}
-        onAddTask={(task) => handleAddTask({ ...task, taskType: 'regular' })}
-        onUpdateTask={handleUpdateTask}
-        onDeleteTask={handleDeleteTask}
-      />
-      <Upcoming
-        tasks={regularTasks}
-        onAddTask={(task) => handleAddTask({ ...task, taskType: 'regular' })}
-        onUpdateTask={handleUpdateTask}
-        onDeleteTask={handleDeleteTask}
-      />
-      <NotToDo
-        tasks={notToDoTasks}
-        onAddTask={(task) => handleAddTask({ ...task, taskType: 'notToDo' })}
-        onToggleTask={(id) => handleUpdateTask(id, { completed: !tasks.find(task => task._id === id).completed })}
-        onDeleteTask={handleDeleteTask}
-      />
-      <Notes
-        tasks={noteTasks}
-        onAddTask={(task) => handleAddTask({ ...task, taskType: 'note' })}
-        onDeleteTask={handleDeleteTask}
-      />
-      <footer className="flex justify-end p-5">
-        <button className="flex items-center justify-center h-14 px-5 rounded-full bg-[#378fe6] text-[#f8fafb] text-base font-bold gap-4">
-          <span className="material-icons">add</span>
-          <span className="truncate">New</span>
-        </button>
-      </footer>
+      <div className="px-4 py-4 bg-white shadow-md rounded-lg mb-4">
+        <DailyEngagement
+          tasks={dailyEngagementTasks}
+          onAddTask={(task) => handleAddTask({ ...task, taskType: 'dailyEngagement' })}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      </div>
+      <div className="px-4 py-4 bg-white shadow-md rounded-lg mb-4">
+        <TodaysTasks
+          tasks={regularTasks}
+          onAddTask={(task) => handleAddTask({ ...task, taskType: 'regular' })}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      </div>
+      <div className="px-4 py-4 bg-white shadow-md rounded-lg mb-4">
+        <Upcoming
+          tasks={regularTasks}
+          onAddTask={(task) => handleAddTask({ ...task, taskType: 'regular' })}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      </div>
+      <div className="px-4 py-4 bg-white shadow-md rounded-lg mb-4">
+        <NotToDo
+          tasks={notToDoTasks}
+          onAddTask={(task) => handleAddTask({ ...task, taskType: 'notToDo' })}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      </div>
+  
     </div>
   );
 }
