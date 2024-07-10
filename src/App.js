@@ -11,7 +11,8 @@ import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
 
 import './index.css';
-import { getTasks, createTask, updateTask, deleteTask } from './api';
+import { getTasks, createTask, updateTask, deleteTask, getQuote } from './api';
+
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -23,13 +24,8 @@ function App() {
   }, []);
 
   const fetchQuote = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/quotes');
-      const data = await response.json();
-      setQuote(data.quote);
-    } catch (err) {
-      console.error('Error fetching quotes:', err);
-    }
+    const quote = await getQuote();
+    setQuote(quote);
   };
 
   const fetchTasks = async () => {

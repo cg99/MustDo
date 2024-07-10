@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = `${process.env.REACT_APP_SERVER_URL}/api`;
 
 // Set up Axios instance with base URL and interceptors
 const axiosInstance = axios.create({
@@ -56,4 +56,15 @@ export const loginUser = async (user) => {
 export const getUser = async () => {
   const response = await axiosInstance.get('/auth/me');
   return response.data;
+};
+
+
+// motivational quotes
+export const getQuote = async () => {
+  try {
+    const response = await axiosInstance.get('/quotes');
+    return response.data.quote;
+  } catch (error) {
+    throw new Error('Error fetching quotes: ' + error.message);
+  }
 };
